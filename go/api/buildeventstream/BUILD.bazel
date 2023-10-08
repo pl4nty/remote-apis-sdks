@@ -1,0 +1,25 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+
+proto_library(
+    name = "buildeventstream_proto",
+    srcs = ["buildeventstream.proto"],
+    visibility = ["//visibility:public"],
+    deps = ["//go/api/command:command_proto"],
+)
+
+go_proto_library(
+    name = "buildeventstream_go_proto",
+    importpath = "github.com/bazelbuild/remote-apis-sdks/go/api/buildeventstream",
+    proto = ":buildeventstream_proto",
+    visibility = ["//visibility:public"],
+    deps = ["//go/api/command"],
+)
+
+go_library(
+    name = "buildeventstream",
+    embed = [":buildeventstream_go_proto"],
+    importpath = "github.com/bazelbuild/remote-apis-sdks/go/api/buildeventstream",
+    visibility = ["//visibility:public"],
+)
